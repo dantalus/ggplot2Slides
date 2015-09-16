@@ -1,0 +1,154 @@
+---
+title       : Data visualization with ggplot2
+subtitle    : Cork R-User's Group
+author      : Darren L Dahly
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : ir_black     # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- 
+<br>
+<br>
+<center>![](gg.png)</center>
+<br>
+<br>
+
+<center>http://vita.had.co.nz/papers/layered-grammar.pdf</center>
+
+--- 
+
+## ggplot2 works with dataframes
+
+```{r, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE} 
+
+   library(ggplot2)
+   head(iris)
+   
+```  
+
+---
+
+## Object class matters
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+   lapply(iris, class)
+   
+```  
+
+---
+
+## Minimal example
+
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.show = 'hide'} 
+
+   ggplot(iris, aes(x = Sepal.Width)) +
+   geom_bar()  
+
+```   
+
+
+---
+
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 8, fig.align = 'center'} 
+
+   ggplot(iris, aes(x = Sepal.Width)) +
+   geom_bar()  
+   
+``` 
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+   plot <- ggplot(iris, aes(x = Sepal.Width)) 
+   plot <- plot + geom_bar()  
+
+```   
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.align = 'center'} 
+
+   plot
+
+```   
+
+---
+
+## Data
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+   ggplot(iris[1:10, ], aes(x = Sepal.Width)) +
+   geom_bar()  
+
+```   
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+   ggplot(subset(iris, Species == "setosa"), aes(x = Sepal.Width)) +
+   geom_bar()  
+
+``` 
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+
+   library(dplyr)
+   
+   iris %>%
+   filter(Species == "virginica") %>%
+
+   ggplot(aes(x = Sepal.Width)) +
+   geom_bar()  
+
+``` 
+
+---
+
+## Class matters
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+
+  iris %>%
+  mutate(Sepal.Width = factor(round(Sepal.Width, 0))) %>%
+  
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+
+```
+
+---
+
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+
+  iris %>%
+  mutate(Sepal.Width = round(Sepal.Width, 0)) %>%
+  
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+
+```
+
+---
+
+## aes - Aeshtetic Mapping
+
+x-axis
+y-axis
+color/fill
+shape/linetype
+size
+alpha
+
+
