@@ -24,7 +24,7 @@ knit        : slidify::knit2slides
 
 
 ```r
-   require(ggplot2)
+   library(ggplot2)
    head(iris)
 ```
 
@@ -124,7 +124,7 @@ knit        : slidify::knit2slides
 
 
 ```r
-   require(dplyr)
+   library(dplyr)
    
    iris %>%
    filter(Species == "virginica") %>%
@@ -135,5 +135,44 @@ knit        : slidify::knit2slides
 
 <img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
 
+---
+
+## Class matters
+
+
+```r
+  iris %>%
+  mutate(Sepal.Width = factor(round(Sepal.Width, 0))) %>%
+  
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+```
+
+<img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+
+---
+
+
+
+```r
+  iris %>%
+  mutate(Sepal.Width = round(Sepal.Width, 0)) %>%
+  
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+```
+
+<img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+
+---
+
+## aes - Aeshtetic Mapping
+
+### x-axis
+### y-axis
+### color/fill
+### shape/linetype
+### size
+### alpha
 
 

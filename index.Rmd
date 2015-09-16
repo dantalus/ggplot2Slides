@@ -144,11 +144,11 @@ knit        : slidify::knit2slides
 
 ## aes - Aeshtetic Mapping
 
-x-axis
-y-axis
-color/fill
-shape/linetype
-size
-alpha
+### x-axis
+### y-axis
+### color/fill
+### shape/linetype
+### size
+### alpha
 
 

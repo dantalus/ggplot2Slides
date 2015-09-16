@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +60,7 @@
     <h2>ggplot2 works with dataframes</h2>
   </hgroup>
   <article data-timings="">
-    <pre><code class="r">   require(ggplot2)
+    <pre><code class="r">   library(ggplot2)
    head(iris)
 </code></pre>
 
@@ -177,7 +176,7 @@
 
 <slide class="" id="slide-10" style="background:;">
   <article data-timings="">
-    <pre><code class="r">   require(dplyr)
+    <pre><code class="r">   library(dplyr)
 
    iris %&gt;%
    filter(Species == &quot;virginica&quot;) %&gt;%
@@ -187,6 +186,60 @@
 </code></pre>
 
 <p><img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Class matters</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">  iris %&gt;%
+  mutate(Sepal.Width = factor(round(Sepal.Width, 0))) %&gt;%
+
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  iris %&gt;%
+  mutate(Sepal.Width = round(Sepal.Width, 0)) %&gt;%
+
+  ggplot(aes(x = Sepal.Width)) +
+  geom_bar() 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>aes - Aeshtetic Mapping</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>x-axis</h3>
+
+<h3>y-axis</h3>
+
+<h3>color/fill</h3>
+
+<h3>shape/linetype</h3>
+
+<h3>size</h3>
+
+<h3>alpha</h3>
 
   </article>
   <!-- Presenter Notes -->
@@ -256,6 +309,24 @@
          10
       </a>
     </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Class matters'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='NA'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='aes - Aeshtetic Mapping'>
+         13
+      </a>
+    </li>
   </ul>
   </div>  <!--[if IE]>
     <script 
@@ -272,6 +343,3 @@
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->
    
   </html>
-=======
-ggplot2Slides
->>>>>>> origin/gh-pages
