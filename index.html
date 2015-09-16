@@ -33,7 +33,7 @@
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
     <h1>Data visualization with ggplot2</h1>
-    <h2>Cork R-User's Group</h2>
+    <h2>Cork R-User's Group - September 16th, 2015</h2>
     <p>Darren L Dahly<br/></p>
   </hgroup>
   <article></article>  
@@ -681,8 +681,7 @@
 <slide class="" id="slide-49" style="background:;">
   <article data-timings="">
     <pre><code class="r">  ggplot(mpg, aes(x = drv, y = class, color = year)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
 </code></pre>
 
 <p><img src="assets/fig/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" /></p>
@@ -694,8 +693,7 @@
 <slide class="" id="slide-50" style="background:;">
   <article data-timings="">
     <pre><code class="r">  ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
 </code></pre>
 
 <p><img src="assets/fig/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" /></p>
@@ -1007,17 +1005,61 @@
 
 <slide class="" id="slide-74" style="background:;">
   <article data-timings="">
-    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), y = cty)) +
-  geom_bar(stat = &quot;identity&quot;)
+    <pre><code class="r">  mpg %&gt;%
+  group_by(cyl, class) %&gt;%   
+  summarize(subtotal = n()) %&gt;%
+  mutate(total = max(cumsum(subtotal))) %&gt;%
+  mutate(prop = subtotal/total) %&gt;%
+  head()
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" style="display: block; margin: auto;" /></p>
+<pre><code>## Source: local data frame [6 x 5]
+## Groups: cyl
+## 
+##   cyl      class subtotal total       prop
+## 1   4    compact       32    81 0.39506173
+## 2   4    midsize       16    81 0.19753086
+## 3   4    minivan        1    81 0.01234568
+## 4   4     pickup        3    81 0.03703704
+## 5   4 subcompact       21    81 0.25925926
+## 6   4        suv        8    81 0.09876543
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-75" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  mpg %&gt;%
+  group_by(cyl, class) %&gt;%   
+  summarize(subtotal = n()) %&gt;%
+  mutate(total = max(cumsum(subtotal))) %&gt;%
+  mutate(prop = subtotal/total) %&gt;%  
+
+  ggplot(aes(x = factor(cyl), fill = class, y = prop)) +
+  geom_bar(position = &quot;stack&quot;, stat = &quot;identity&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-38-1.png" title="plot of chunk unnamed-chunk-38" alt="plot of chunk unnamed-chunk-38" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-76" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), y = cty)) +
+  geom_bar(stat = &quot;identity&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-39-1.png" title="plot of chunk unnamed-chunk-39" alt="plot of chunk unnamed-chunk-39" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-77" style="background:;">
   <article data-timings="">
     <pre><code class="r">  mpg %&gt;%
   group_by(cyl) %&gt;%
@@ -1037,7 +1079,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-76" style="background:;">
+<slide class="" id="slide-78" style="background:;">
   <article data-timings="">
     <pre><code class="r">  mpg %&gt;%
   group_by(cyl) %&gt;%
@@ -1047,7 +1089,417 @@
   geom_bar(stat = &quot;identity&quot;)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-39-1.png" title="plot of chunk unnamed-chunk-39" alt="plot of chunk unnamed-chunk-39" style="display: block; margin: auto;" /></p>
+<p><img src="assets/fig/unnamed-chunk-41-1.png" title="plot of chunk unnamed-chunk-41" alt="plot of chunk unnamed-chunk-41" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-79" style="background:;">
+  <hgroup>
+    <h2>Heat maps</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-80" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  data_frame(&quot;ID&quot; = c(1:50), 
+             &quot;A&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;B&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;C&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;D&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;E&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;G&quot;  = sample(c(1:5), 50, replace = T)) %&gt;% head()
+</code></pre>
+
+<pre><code>## Source: local data frame [6 x 7]
+## 
+##   ID A B C D E G
+## 1  1 3 2 1 1 3 4
+## 2  2 5 4 1 4 2 3
+## 3  3 5 3 3 3 2 3
+## 4  4 2 4 3 1 1 2
+## 5  5 4 4 1 5 1 5
+## 6  6 4 1 3 1 2 3
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-81" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  library(tidyr) 
+
+  data_frame(&quot;ID&quot; = c(1:50), 
+             &quot;A&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;B&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;C&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;D&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;E&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;G&quot;  = sample(c(1:5), 50, replace = T)) %&gt;% 
+  gather(question, value, A:G)  %&gt;% 
+  head()
+</code></pre>
+
+<pre><code>## Source: local data frame [6 x 3]
+## 
+##   ID question value
+## 1  1        A     1
+## 2  2        A     1
+## 3  3        A     1
+## 4  4        A     5
+## 5  5        A     3
+## 6  6        A     4
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-82" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  data_frame(&quot;ID&quot; = c(1:50), 
+             &quot;A&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;B&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;C&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;D&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;E&quot;  = sample(c(1:5), 50, replace = T),
+             &quot;G&quot;  = sample(c(1:5), 50, replace = T)) %&gt;% 
+  gather(question, value, A:G) %&gt;%
+  mutate(value = factor(value, 
+                        labels = c(&quot;Weekly&quot;, 
+                                    &quot;Monthly/Quarterly&quot;, 
+                                    &quot;Yearly&quot;,
+                                    &quot;Not yet&quot;, 
+                                    &quot;Not my job&quot;)))  %&gt;%
+  head()
+</code></pre>
+
+<pre><code>## Source: local data frame [6 x 3]
+## 
+##   ID question             value
+## 1  1        A            Yearly
+## 2  2        A        Not my job
+## 3  3        A            Yearly
+## 4  4        A Monthly/Quarterly
+## 5  5        A            Yearly
+## 6  6        A        Not my job
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-83" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-46-1.png" title="plot of chunk unnamed-chunk-46" alt="plot of chunk unnamed-chunk-46" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-84" style="background:;">
+  <hgroup>
+    <h2>Scales</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-85" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  library(RColorBrewer) 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = &quot;Set1&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-47-1.png" title="plot of chunk unnamed-chunk-47" alt="plot of chunk unnamed-chunk-47" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-86" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  library(RColorBrewer) 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = &quot;Blues&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-48-1.png" title="plot of chunk unnamed-chunk-48" alt="plot of chunk unnamed-chunk-48" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-87" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = &quot;Set1&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-49-1.png" title="plot of chunk unnamed-chunk-49" alt="plot of chunk unnamed-chunk-49" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-88" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = &quot;Reds&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-50-1.png" title="plot of chunk unnamed-chunk-50" alt="plot of chunk unnamed-chunk-50" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-89" style="background:;">
+  <article data-timings="">
+    <pre><code class="r"> brewer.pal(6, &quot;Reds&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;#FEE5D9&quot; &quot;#FCBBA1&quot; &quot;#FC9272&quot; &quot;#FB6A4A&quot; &quot;#DE2D26&quot; &quot;#A50F15&quot;
+</code></pre>
+
+<pre><code class="r"> brewer.pal(6, &quot;Reds&quot;)[4:6]
+</code></pre>
+
+<pre><code>## [1] &quot;#FB6A4A&quot; &quot;#DE2D26&quot; &quot;#A50F15&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-90" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(values = brewer.pal(6, &quot;Reds&quot;)[4:6])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-52-1.png" title="plot of chunk unnamed-chunk-52" alt="plot of chunk unnamed-chunk-52" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-91" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(guide = FALSE, values = brewer.pal(6, &quot;Reds&quot;)[4:6])
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-92" style="background:;">
+  <hgroup>
+    <h2>ColorBrewer</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br>
+<br>
+<center><a href="http://colorbrewer2.org/">http://colorbrewer2.org/</a></center></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-93" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(breaks = c(2, 3, 4, 5))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-94" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(limit = c(3, 4))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-55-1.png" title="plot of chunk unnamed-chunk-55" alt="plot of chunk unnamed-chunk-55" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-95" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_reverse()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-56-1.png" title="plot of chunk unnamed-chunk-56" alt="plot of chunk unnamed-chunk-56" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-96" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c(&quot;4&quot;, &quot;6&quot;, &quot;8&quot;))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-57-1.png" title="plot of chunk unnamed-chunk-57" alt="plot of chunk unnamed-chunk-57" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-97" style="background:;">
+  <hgroup>
+    <h2>Labels</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-98" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c(&quot;4&quot;, &quot;6&quot;, &quot;8&quot;)) +
+  ggtitle(&quot;Title&quot;) +
+  ylab(&quot;Number of observations&quot;) +
+  xlab(&quot;Number of cylinders&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-58-1.png" title="plot of chunk unnamed-chunk-58" alt="plot of chunk unnamed-chunk-58" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-99" style="background:;">
+  <hgroup>
+    <h2>Themes</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c(&quot;4&quot;, &quot;6&quot;, &quot;8&quot;)) +
+  ggtitle(&quot;Title&quot;) +
+  ylab(&quot;Number of observations&quot;) +
+  xlab(&quot;Number of cylinders&quot;) +
+  theme_bw()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-59-1.png" title="plot of chunk unnamed-chunk-59" alt="plot of chunk unnamed-chunk-59" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-100" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c(&quot;4&quot;, &quot;6&quot;, &quot;8&quot;)) +
+  ggtitle(&quot;Title&quot;) +
+  ylab(&quot;Number of observations&quot;) +
+  xlab(&quot;Number of cylinders&quot;) +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+            panel.border = element_blank(),
+            axis.text.x = element_text(angle = 45, hjust = 1))
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-60-1.png" title="plot of chunk unnamed-chunk-60" alt="plot of chunk unnamed-chunk-60" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-101" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(data, aes(x = question, y = as.factor(ID))) + 
+  geom_tile(aes(fill = value)) +
+  ylab(&quot;Each row is a person (n = 500)&quot;) +
+  xlab(&quot;Survey Question&quot;) +
+  scale_y_discrete(labels = &quot;&quot;) +
+  theme_bw() + 
+  theme(text = element_text (color = &quot;black&quot;, family = &quot;serif&quot;), 
+        strip.background = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(),
+        axis.text.x = element_text (angle = 90), 
+        axis.ticks.y = element_blank()) +
+  scale_fill_brewer(&quot;&quot;, palette = &quot;RdBu&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-102" style="background:;">
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-62-1.png" title="plot of chunk unnamed-chunk-62" alt="plot of chunk unnamed-chunk-62" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-103" style="background:;">
+  <hgroup>
+    <h2>Themes</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br>
+<br>
+<center><a href="http://docs.ggplot2.org/current/theme.html">http://docs.ggplot2.org/current/theme.html</a></center></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-104" style="background:;">
+  <hgroup>
+    <h2>Summary</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Data</li>
+<li>Map variables to visual properties (aesthetics)</li>
+<li>Choose useful geometries</li>
+<li>Take advantage of layers</li>
+<li>Modify scales as needed</li>
+<li>Add labels</li>
+<li>Customize your theme</li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
@@ -1511,6 +1963,174 @@
       <a href="#" target="_self" rel='tooltip' 
         data-slide=76 title='NA'>
          76
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=77 title='NA'>
+         77
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=78 title='NA'>
+         78
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=79 title='Heat maps'>
+         79
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=80 title='NA'>
+         80
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=81 title='NA'>
+         81
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=82 title='NA'>
+         82
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=83 title='NA'>
+         83
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=84 title='Scales'>
+         84
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=85 title='NA'>
+         85
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=86 title='NA'>
+         86
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=87 title='NA'>
+         87
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=88 title='NA'>
+         88
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=89 title='NA'>
+         89
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=90 title='NA'>
+         90
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=91 title='NA'>
+         91
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=92 title='ColorBrewer'>
+         92
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=93 title='NA'>
+         93
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=94 title='NA'>
+         94
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=95 title='NA'>
+         95
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=96 title='NA'>
+         96
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=97 title='Labels'>
+         97
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=98 title='NA'>
+         98
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=99 title='Themes'>
+         99
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=100 title='NA'>
+         100
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=101 title='NA'>
+         101
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=102 title='NA'>
+         102
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=103 title='Themes'>
+         103
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=104 title='Summary'>
+         104
       </a>
     </li>
   </ul>

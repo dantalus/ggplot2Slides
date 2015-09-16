@@ -1,6 +1,6 @@
 ---
 title       : Data visualization with ggplot2
-subtitle    : Cork R-User's Group
+subtitle    : Cork R-User's Group - September 16th, 2015
 author      : Darren L Dahly
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -510,8 +510,7 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(mpg, aes(x = drv, y = class, color = year)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
 ```
 
 <img src="assets/fig/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
@@ -521,14 +520,12 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
 ```
 
 <img src="assets/fig/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
 
 ---
-
 
 ## Boxplots
 
@@ -777,11 +774,52 @@ knit        : slidify::knit2slides
 
 
 ```r
+  mpg %>%
+  group_by(cyl, class) %>%   
+  summarize(subtotal = n()) %>%
+  mutate(total = max(cumsum(subtotal))) %>%
+  mutate(prop = subtotal/total) %>%
+  head()
+```
+
+```
+## Source: local data frame [6 x 5]
+## Groups: cyl
+## 
+##   cyl      class subtotal total       prop
+## 1   4    compact       32    81 0.39506173
+## 2   4    midsize       16    81 0.19753086
+## 3   4    minivan        1    81 0.01234568
+## 4   4     pickup        3    81 0.03703704
+## 5   4 subcompact       21    81 0.25925926
+## 6   4        suv        8    81 0.09876543
+```
+
+---
+
+
+```r
+  mpg %>%
+  group_by(cyl, class) %>%   
+  summarize(subtotal = n()) %>%
+  mutate(total = max(cumsum(subtotal))) %>%
+  mutate(prop = subtotal/total) %>%  
+  
+  ggplot(aes(x = factor(cyl), fill = class, y = prop)) +
+  geom_bar(position = "stack", stat = "identity")
+```
+
+<img src="assets/fig/unnamed-chunk-38-1.png" title="plot of chunk unnamed-chunk-38" alt="plot of chunk unnamed-chunk-38" style="display: block; margin: auto;" />
+
+---
+
+
+```r
   ggplot(mpg, aes(x = factor(cyl), y = cty)) +
   geom_bar(stat = "identity")
 ```
 
-<img src="assets/fig/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" style="display: block; margin: auto;" />
+<img src="assets/fig/unnamed-chunk-39-1.png" title="plot of chunk unnamed-chunk-39" alt="plot of chunk unnamed-chunk-39" style="display: block; margin: auto;" />
 
 ---
 
@@ -814,5 +852,344 @@ knit        : slidify::knit2slides
   geom_bar(stat = "identity")
 ```
 
-<img src="assets/fig/unnamed-chunk-39-1.png" title="plot of chunk unnamed-chunk-39" alt="plot of chunk unnamed-chunk-39" style="display: block; margin: auto;" />
+<img src="assets/fig/unnamed-chunk-41-1.png" title="plot of chunk unnamed-chunk-41" alt="plot of chunk unnamed-chunk-41" style="display: block; margin: auto;" />
+
+---
+
+## Heat maps
+
+---
+
+
+```r
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% head()
+```
+
+```
+## Source: local data frame [6 x 7]
+## 
+##   ID A B C D E G
+## 1  1 3 2 1 1 3 4
+## 2  2 5 4 1 4 2 3
+## 3  3 5 3 3 3 2 3
+## 4  4 2 4 3 1 1 2
+## 5  5 4 4 1 5 1 5
+## 6  6 4 1 3 1 2 3
+```
+
+---
+
+
+```r
+  library(tidyr) 
+   
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% 
+  gather(question, value, A:G)  %>% 
+  head()
+```
+
+```
+## Source: local data frame [6 x 3]
+## 
+##   ID question value
+## 1  1        A     1
+## 2  2        A     1
+## 3  3        A     1
+## 4  4        A     5
+## 5  5        A     3
+## 6  6        A     4
+```
+
+---
+
+
+```r
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% 
+  gather(question, value, A:G) %>%
+  mutate(value = factor(value, 
+                        labels = c("Weekly", 
+                                    "Monthly/Quarterly", 
+                                    "Yearly",
+                                    "Not yet", 
+                                    "Not my job")))  %>%
+  head()
+```
+
+```
+## Source: local data frame [6 x 3]
+## 
+##   ID question             value
+## 1  1        A            Yearly
+## 2  2        A        Not my job
+## 3  3        A            Yearly
+## 4  4        A Monthly/Quarterly
+## 5  5        A            Yearly
+## 6  6        A        Not my job
+```
+
+---
+
+
+
+<img src="assets/fig/unnamed-chunk-46-1.png" title="plot of chunk unnamed-chunk-46" alt="plot of chunk unnamed-chunk-46" style="display: block; margin: auto;" />
+
+---
+
+## Scales
+
+---
+
+
+```r
+  library(RColorBrewer) 
+   
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Set1")
+```
+
+<img src="assets/fig/unnamed-chunk-47-1.png" title="plot of chunk unnamed-chunk-47" alt="plot of chunk unnamed-chunk-47" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  library(RColorBrewer) 
+   
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Blues")
+```
+
+<img src="assets/fig/unnamed-chunk-48-1.png" title="plot of chunk unnamed-chunk-48" alt="plot of chunk unnamed-chunk-48" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = "Set1")
+```
+
+<img src="assets/fig/unnamed-chunk-49-1.png" title="plot of chunk unnamed-chunk-49" alt="plot of chunk unnamed-chunk-49" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = "Reds")
+```
+
+<img src="assets/fig/unnamed-chunk-50-1.png" title="plot of chunk unnamed-chunk-50" alt="plot of chunk unnamed-chunk-50" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+ brewer.pal(6, "Reds")
+```
+
+```
+## [1] "#FEE5D9" "#FCBBA1" "#FC9272" "#FB6A4A" "#DE2D26" "#A50F15"
+```
+
+```r
+ brewer.pal(6, "Reds")[4:6]
+```
+
+```
+## [1] "#FB6A4A" "#DE2D26" "#A50F15"
+```
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(values = brewer.pal(6, "Reds")[4:6])
+```
+
+<img src="assets/fig/unnamed-chunk-52-1.png" title="plot of chunk unnamed-chunk-52" alt="plot of chunk unnamed-chunk-52" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(guide = FALSE, values = brewer.pal(6, "Reds")[4:6])
+```
+
+<img src="assets/fig/unnamed-chunk-53-1.png" title="plot of chunk unnamed-chunk-53" alt="plot of chunk unnamed-chunk-53" style="display: block; margin: auto;" />
+
+---
+
+## ColorBrewer
+
+<br>
+<br>
+<center>http://colorbrewer2.org/</center>
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(breaks = c(2, 3, 4, 5))
+```
+
+<img src="assets/fig/unnamed-chunk-54-1.png" title="plot of chunk unnamed-chunk-54" alt="plot of chunk unnamed-chunk-54" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(limit = c(3, 4))
+```
+
+<img src="assets/fig/unnamed-chunk-55-1.png" title="plot of chunk unnamed-chunk-55" alt="plot of chunk unnamed-chunk-55" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_reverse()
+```
+
+<img src="assets/fig/unnamed-chunk-56-1.png" title="plot of chunk unnamed-chunk-56" alt="plot of chunk unnamed-chunk-56" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8"))
+```
+
+<img src="assets/fig/unnamed-chunk-57-1.png" title="plot of chunk unnamed-chunk-57" alt="plot of chunk unnamed-chunk-57" style="display: block; margin: auto;" />
+
+---
+
+## Labels
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders")
+```
+
+<img src="assets/fig/unnamed-chunk-58-1.png" title="plot of chunk unnamed-chunk-58" alt="plot of chunk unnamed-chunk-58" style="display: block; margin: auto;" />
+
+---
+
+## Themes
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders") +
+  theme_bw()
+```
+
+<img src="assets/fig/unnamed-chunk-59-1.png" title="plot of chunk unnamed-chunk-59" alt="plot of chunk unnamed-chunk-59" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+  			panel.border = element_blank(),
+  			axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+<img src="assets/fig/unnamed-chunk-60-1.png" title="plot of chunk unnamed-chunk-60" alt="plot of chunk unnamed-chunk-60" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(data, aes(x = question, y = as.factor(ID))) + 
+  geom_tile(aes(fill = value)) +
+  ylab("Each row is a person (n = 500)") +
+  xlab("Survey Question") +
+  scale_y_discrete(labels = "") +
+  theme_bw() + 
+  theme(text = element_text (color = "black", family = "serif"), 
+        strip.background = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(),
+        axis.text.x = element_text (angle = 90), 
+        axis.ticks.y = element_blank()) +
+  scale_fill_brewer("", palette = "RdBu")
+```
+
+---
+
+<img src="assets/fig/unnamed-chunk-62-1.png" title="plot of chunk unnamed-chunk-62" alt="plot of chunk unnamed-chunk-62" style="display: block; margin: auto;" />
+
+---
+
+## Themes
+
+<br>
+<br>
+<center>http://docs.ggplot2.org/current/theme.html</center>
+
+---
+
+## Summary
+
+- Data
+- Map variables to visual properties (aesthetics)
+- Choose useful geometries
+- Take advantage of layers
+- Modify scales as needed
+- Add labels
+- Customize your theme
+
 

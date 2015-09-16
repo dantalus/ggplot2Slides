@@ -3,3 +3,5 @@ devtools
 slidify
 ggplot2
 dplyr
+RColorBrewer
+tidyr

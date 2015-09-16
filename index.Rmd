@@ -1,6 +1,6 @@
 ---
 title       : Data visualization with ggplot2
-subtitle    : Cork R-User's Group
+subtitle    : Cork R-User's Group - September 16th, 2015
 author      : Darren L Dahly
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -486,8 +486,7 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = drv, y = class, color = year)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
  
   
 ```
@@ -497,14 +496,12 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
-                                                      height = 0.2)) 
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.2)) 
  
   
 ```
 
 ---
-
 
 ## Boxplots
 
@@ -727,6 +724,34 @@ knit        : slidify::knit2slides
 
 ---
 
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+  mpg %>%
+  group_by(cyl, class) %>%   
+  summarize(subtotal = n()) %>%
+  mutate(total = max(cumsum(subtotal))) %>%
+  mutate(prop = subtotal/total) %>%
+  head()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 4, fig.height = 5, fig.align = 'center'} 
+
+  mpg %>%
+  group_by(cyl, class) %>%   
+  summarize(subtotal = n()) %>%
+  mutate(total = max(cumsum(subtotal))) %>%
+  mutate(prop = subtotal/total) %>%  
+  
+  ggplot(aes(x = factor(cyl), fill = class, y = prop)) +
+  geom_bar(position = "stack", stat = "identity")
+  
+```
+
+---
+
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = factor(cyl), y = cty)) +
@@ -756,4 +781,329 @@ knit        : slidify::knit2slides
   geom_bar(stat = "identity")
   
 ```
+
+---
+
+## Heat maps
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% head()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+  library(tidyr) 
+   
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% 
+  gather(question, value, A:G)  %>% 
+  head()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% 
+  gather(question, value, A:G) %>%
+  mutate(value = factor(value, 
+                        labels = c("Weekly", 
+                                    "Monthly/Quarterly", 
+                                    "Yearly",
+                                    "Not yet", 
+                                    "Not my job")))  %>%
+  head()
+
+```
+
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE} 
+
+
+  data_frame("ID" = c(1:50), 
+             "A"  = sample(c(1:5), 50, replace = T),
+             "B"  = sample(c(1:5), 50, replace = T),
+             "C"  = sample(c(1:5), 50, replace = T),
+             "D"  = sample(c(1:5), 50, replace = T),
+             "E"  = sample(c(1:5), 50, replace = T),
+             "G"  = sample(c(1:5), 50, replace = T)) %>% 
+  gather(question, value, A:G) %>%
+  mutate(value = factor(value, 
+                        labels = c("Weekly", 
+                                    "Monthly/Quarterly", 
+                                    "Yearly",
+                                    "Not yet", 
+                                    "Not my job")))  -> data
+ 
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(data, aes(x = question, y = as.factor(ID))) + 
+  geom_tile(aes(fill = value)) 
+  
+```
+
+---
+
+## Scales
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  library(RColorBrewer) 
+   
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Set1")
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  library(RColorBrewer) 
+   
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Blues")
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = "Set1")
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_brewer(palette = "Reds")
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ brewer.pal(6, "Reds")
+ brewer.pal(6, "Reds")[4:6]
+
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(values = brewer.pal(6, "Reds")[4:6])
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_color_manual(guide = FALSE, values = brewer.pal(6, "Reds")[4:6])
+
+```
+
+---
+
+## ColorBrewer
+
+<br>
+<br>
+<center>http://colorbrewer2.org/</center>
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(breaks = c(2, 3, 4, 5))
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_continuous(limit = c(3, 4))
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  scale_x_reverse()
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8"))
+  
+```
+
+---
+
+## Labels
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders")
+  
+```
+
+---
+
+## Themes
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 5, fig.height = 4, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders") +
+  theme_bw()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 5, fig.height = 4, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar() +
+  scale_x_discrete(limits = c("4", "6", "8")) +
+  ggtitle("Title") +
+  ylab("Number of observations") +
+  xlab("Number of cylinders") +
+  theme_bw() +
+  theme(panel.grid = element_blank(),
+  			panel.border = element_blank(),
+  			axis.text.x = element_text(angle = 45, hjust = 1))
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.show = 'hide'} 
+
+  ggplot(data, aes(x = question, y = as.factor(ID))) + 
+  geom_tile(aes(fill = value)) +
+  ylab("Each row is a person (n = 500)") +
+  xlab("Survey Question") +
+  scale_y_discrete(labels = "") +
+  theme_bw() + 
+  theme(text = element_text (color = "black", family = "serif"), 
+        strip.background = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(),
+        axis.text.x = element_text (angle = 90), 
+        axis.ticks.y = element_blank()) +
+  scale_fill_brewer("", palette = "RdBu")
+
+```
+
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 8, fig.align = 'center'} 
+
+  ggplot(data, aes(x = question, y = as.factor(ID))) + 
+  geom_tile(aes(fill = value)) +
+  ylab("Each row is a person (n = 500)") +
+  xlab("Survey Question") +
+  scale_y_discrete(labels = "") +
+  theme_bw() + 
+  theme(text = element_text (color = "black", family = "serif"), 
+        strip.background = element_blank(),
+        panel.border = element_blank(), 
+        panel.grid = element_blank(),
+        axis.text.x = element_text (angle = 90), 
+        axis.ticks.y = element_blank()) +
+  scale_fill_brewer("", palette = "RdBu")
+
+```
+
+---
+
+## Themes
+
+<br>
+<br>
+<center>http://docs.ggplot2.org/current/theme.html</center>
+
+---
+
+## Summary
+
+- Data
+- Map variables to visual properties (aesthetics)
+- Choose useful geometries
+- Take advantage of layers
+- Modify scales as needed
+- Add labels
+- Customize your theme
+
 
