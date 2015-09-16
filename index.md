@@ -20,6 +20,142 @@ knit        : slidify::knit2slides
 
 --- 
 
+<br>
+<br>
+<center>![](ex1.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex2.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex3.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex4.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex5.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex6.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex7.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex8.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex9.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex10.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex11.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex12.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex13.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex14.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex15.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex16.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex17.png)</center>
+<br>
+<br>
+
+---
+
 ## ggplot2 works with dataframes
 
 
@@ -79,7 +215,7 @@ knit        : slidify::knit2slides
 ---
 
 
-<img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
+<img src="assets/fig/first plot-1.png" title="plot of chunk first plot" alt="plot of chunk first plot" style="display: block; margin: auto;" />
 
 ---
 
@@ -96,7 +232,7 @@ knit        : slidify::knit2slides
    plot
 ```
 
-<img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
+<img src="assets/fig/as object 2-1.png" title="plot of chunk as object 2" alt="plot of chunk as object 2" style="display: block; margin: auto;" />
 
 ---
 
@@ -108,7 +244,7 @@ knit        : slidify::knit2slides
    geom_bar()  
 ```
 
-<img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
+<img src="assets/fig/index data-1.png" title="plot of chunk index data" alt="plot of chunk index data" style="display: block; margin: auto;" />
 
 ---
 
@@ -118,7 +254,7 @@ knit        : slidify::knit2slides
    geom_bar()  
 ```
 
-<img src="assets/fig/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+<img src="assets/fig/subset data-1.png" title="plot of chunk subset data" alt="plot of chunk subset data" style="display: block; margin: auto;" />
 
 ---
 
@@ -133,7 +269,7 @@ knit        : slidify::knit2slides
    geom_bar()  
 ```
 
-<img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+<img src="assets/fig/pipe data-1.png" title="plot of chunk pipe data" alt="plot of chunk pipe data" style="display: block; margin: auto;" />
 
 ---
 
@@ -148,7 +284,7 @@ knit        : slidify::knit2slides
   geom_bar() 
 ```
 
-<img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+<img src="assets/fig/factor bar chart-1.png" title="plot of chunk factor bar chart" alt="plot of chunk factor bar chart" style="display: block; margin: auto;" />
 
 ---
 
@@ -162,11 +298,11 @@ knit        : slidify::knit2slides
   geom_bar() 
 ```
 
-<img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+<img src="assets/fig/numeric bar chart-1.png" title="plot of chunk numeric bar chart" alt="plot of chunk numeric bar chart" style="display: block; margin: auto;" />
 
 ---
 
-## aes - Aeshtetic Mapping
+## aes - Aesthetic Mapping
 
 ### x-axis
 ### y-axis
@@ -175,4 +311,66 @@ knit        : slidify::knit2slides
 ### size
 ### alpha
 
+---
+
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() 
+```
+
+<img src="assets/fig/iris x y-1.png" title="plot of chunk iris x y" alt="plot of chunk iris x y" style="display: block; margin: auto;" />
+
+---
+
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() 
+```
+
+<img src="assets/fig/iris color-1.png" title="plot of chunk iris color" alt="plot of chunk iris color" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, size = Species)) +
+  geom_point() 
+```
+
+<img src="assets/fig/iris size-1.png" title="plot of chunk iris size" alt="plot of chunk iris size" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, shape = Species)) +
+  geom_point() 
+```
+
+<img src="assets/fig/iris shape-1.png" title="plot of chunk iris shape" alt="plot of chunk iris shape" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, 
+                   shape = Species, color = Sepal.Length, size = Sepal.Width)) +
+  geom_point() 
+```
+
+<img src="assets/fig/iris max-1.png" title="plot of chunk iris max" alt="plot of chunk iris max" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy, shape = drv, color = class, size = cyl)) +
+  geom_point() 
+```
+
+<img src="assets/fig/mpg max-1.png" title="plot of chunk mpg max" alt="plot of chunk mpg max" style="display: block; margin: auto;" />
 

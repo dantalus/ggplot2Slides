@@ -20,9 +20,145 @@ knit        : slidify::knit2slides
 
 --- 
 
+<br>
+<br>
+<center>![](ex1.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex2.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex3.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex4.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex5.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex6.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex7.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex8.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex9.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex10.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex11.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex12.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex13.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex14.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex15.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex16.png)</center>
+<br>
+<br>
+
+---
+
+<br>
+<br>
+<center>![](ex17.png)</center>
+<br>
+<br>
+
+---
+
 ## ggplot2 works with dataframes
 
-```{r, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE} 
+```{r data, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE} 
 
    library(ggplot2)
    head(iris)
@@ -33,7 +169,7 @@ knit        : slidify::knit2slides
 
 ## Object class matters
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+```{r class, echo = TRUE, warning = FALSE, message = FALSE} 
 
    lapply(iris, class)
    
@@ -44,7 +180,7 @@ knit        : slidify::knit2slides
 ## Minimal example
 
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.show = 'hide'} 
+```{r minimal code, echo = TRUE, warning = FALSE, message = FALSE, fig.show = 'hide'} 
 
    ggplot(iris, aes(x = Sepal.Width)) +
    geom_bar()  
@@ -55,7 +191,7 @@ knit        : slidify::knit2slides
 ---
 
 
-```{r, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 8, fig.align = 'center'} 
+```{r first plot, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 12, fig.height = 8, fig.align = 'center'} 
 
    ggplot(iris, aes(x = Sepal.Width)) +
    geom_bar()  
@@ -64,7 +200,7 @@ knit        : slidify::knit2slides
 
 ---
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+```{r as object 1, echo = TRUE, warning = FALSE, message = FALSE} 
 
    plot <- ggplot(iris, aes(x = Sepal.Width)) 
    plot <- plot + geom_bar()  
@@ -73,7 +209,7 @@ knit        : slidify::knit2slides
 
 ---
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.align = 'center'} 
+```{r as object 2, echo = TRUE, warning = FALSE, message = FALSE, fig.align = 'center'} 
 
    plot
 
@@ -83,7 +219,7 @@ knit        : slidify::knit2slides
 
 ## Data
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+```{r index data, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
 
    ggplot(iris[1:10, ], aes(x = Sepal.Width)) +
    geom_bar()  
@@ -92,7 +228,7 @@ knit        : slidify::knit2slides
 
 ---
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+```{r subset data, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
 
    ggplot(subset(iris, Species == "setosa"), aes(x = Sepal.Width)) +
    geom_bar()  
@@ -101,7 +237,7 @@ knit        : slidify::knit2slides
 
 ---
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+```{r pipe data, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
 
    library(dplyr)
    
@@ -117,7 +253,7 @@ knit        : slidify::knit2slides
 
 ## Class matters
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+```{r factor bar chart, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
 
   iris %>%
   mutate(Sepal.Width = factor(round(Sepal.Width, 0))) %>%
@@ -130,7 +266,7 @@ knit        : slidify::knit2slides
 ---
 
 
-```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
+```{r numeric bar chart, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5, fig.align = 'center'} 
 
   iris %>%
   mutate(Sepal.Width = round(Sepal.Width, 0)) %>%
@@ -142,7 +278,7 @@ knit        : slidify::knit2slides
 
 ---
 
-## aes - Aeshtetic Mapping
+## aes - Aesthetic Mapping
 
 ### x-axis
 ### y-axis
@@ -151,4 +287,66 @@ knit        : slidify::knit2slides
 ### size
 ### alpha
 
+---
+
+
+```{r iris x y, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() 
+
+```
+
+---
+
+
+```{r iris color, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() 
+
+```
+
+---
+
+```{r iris size, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, size = Species)) +
+  geom_point() 
+
+```
+
+---
+
+```{r iris shape, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, shape = Species)) +
+  geom_point() 
+
+```
+
+---
+
+```{r iris max, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, 
+                   shape = Species, color = Sepal.Length, size = Sepal.Width)) +
+  geom_point() 
+
+```
+
+---
+
+```{r mpg max, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy, shape = drv, color = class, size = cyl)) +
+  geom_point() 
+
+```
 
