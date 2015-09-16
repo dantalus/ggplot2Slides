@@ -46,30 +46,6 @@ knit        : slidify::knit2slides
 
 <br>
 <br>
-<center>![](ex4.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<center>![](ex5.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<center>![](ex6.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
 <center>![](ex7.png)</center>
 <br>
 <br>
@@ -287,6 +263,8 @@ knit        : slidify::knit2slides
 ### size
 ### alpha
 
+### faceting
+
 ---
 
 
@@ -342,11 +320,258 @@ knit        : slidify::knit2slides
 
 ---
 
-```{r mpg max, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
  
   ggplot(mpg, aes(x = cty, y = hwy, shape = drv, color = class, size = cyl)) +
   geom_point() 
 
 ```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy, shape = drv, color = class)) +
+  geom_point() +
+  facet_wrap(~cyl)
+
+```
+
+---
+
+## Layers
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point() 
+
+```
+
+---
+
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point(color = "red") 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = cyl)) 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point() +
+  geom_point(data = mpg[1:10, ], color = "red") 
+
+```
+
+---
+
+## Geometries
+
+<br>
+<br>
+
+<center>http://docs.ggplot2.org/current/</center>
+
+---
+
+## Scatter plots
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_jitter() 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_jitter(size = 3.5, alpha = 0.5) 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) 
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE)
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "black")
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") 
+
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = drv, y = class)) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = drv, y = class, color = year)) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+ 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+ 
+  
+```
+
+---
+
+
+## Boxplots
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_boxplot() 
+  
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+ 
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_jitter() +
+  geom_boxplot() 
+  
+
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
+  geom_boxplot(alpha = 0.5) 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), outlier.shape = NA) +
+  geom_boxplot(alpha = 0.5) 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) 
+  
+```
+
+---
+
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_violin(alpha = 0.5) 
+  
+```
+
+---
+
+
+## Line plots
+
+
 

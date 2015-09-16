@@ -46,30 +46,6 @@ knit        : slidify::knit2slides
 
 <br>
 <br>
-<center>![](ex4.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<center>![](ex5.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
-<center>![](ex6.png)</center>
-<br>
-<br>
-
----
-
-<br>
-<br>
 <center>![](ex7.png)</center>
 <br>
 <br>
@@ -311,6 +287,8 @@ knit        : slidify::knit2slides
 ### size
 ### alpha
 
+### faceting
+
 ---
 
 
@@ -372,5 +350,254 @@ knit        : slidify::knit2slides
   geom_point() 
 ```
 
-<img src="assets/fig/mpg max-1.png" title="plot of chunk mpg max" alt="plot of chunk mpg max" style="display: block; margin: auto;" />
+<img src="assets/fig/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy, shape = drv, color = class)) +
+  geom_point() +
+  facet_wrap(~cyl)
+```
+
+<img src="assets/fig/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" />
+
+---
+
+## Layers
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point() 
+```
+
+<img src="assets/fig/unnamed-chunk-3-1.png" title="plot of chunk unnamed-chunk-3" alt="plot of chunk unnamed-chunk-3" style="display: block; margin: auto;" />
+
+---
+
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point(color = "red") 
+```
+
+<img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = cyl)) 
+```
+
+<img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = cty, y = hwy, color = cyl)) +
+  geom_point() +
+  geom_point(data = mpg[1:10, ], color = "red") 
+```
+
+<img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
+
+---
+
+## Geometries
+
+<br>
+<br>
+
+<center>http://docs.ggplot2.org/current/</center>
+
+---
+
+## Scatter plots
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_point() 
+```
+
+<img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_jitter() 
+```
+
+<img src="assets/fig/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length)) +
+  geom_jitter(size = 3.5, alpha = 0.5) 
+```
+
+<img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) 
+```
+
+<img src="assets/fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+<img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE, color = "black")
+```
+
+<img src="assets/fig/unnamed-chunk-12-1.png" title="plot of chunk unnamed-chunk-12" alt="plot of chunk unnamed-chunk-12" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_jitter(size = 3.5, alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_smooth(method = "lm", se = FALSE, color = "black") 
+```
+
+<img src="assets/fig/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = drv, y = class)) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+```
+
+<img src="assets/fig/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = drv, y = class, color = year)) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+```
+
+<img src="assets/fig/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+```
+
+<img src="assets/fig/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
+
+---
+
+
+## Boxplots
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_boxplot() 
+```
+
+<img src="assets/fig/unnamed-chunk-17-1.png" title="plot of chunk unnamed-chunk-17" alt="plot of chunk unnamed-chunk-17" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_jitter() +
+  geom_boxplot() 
+```
+
+<img src="assets/fig/unnamed-chunk-18-1.png" title="plot of chunk unnamed-chunk-18" alt="plot of chunk unnamed-chunk-18" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
+  geom_boxplot(alpha = 0.5) 
+```
+
+<img src="assets/fig/unnamed-chunk-19-1.png" title="plot of chunk unnamed-chunk-19" alt="plot of chunk unnamed-chunk-19" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), outlier.shape = NA) +
+  geom_boxplot(alpha = 0.5) 
+```
+
+<img src="assets/fig/unnamed-chunk-20-1.png" title="plot of chunk unnamed-chunk-20" alt="plot of chunk unnamed-chunk-20" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
+  geom_boxplot(alpha = 0.5, outlier.shape = NA) 
+```
+
+<img src="assets/fig/unnamed-chunk-21-1.png" title="plot of chunk unnamed-chunk-21" alt="plot of chunk unnamed-chunk-21" style="display: block; margin: auto;" />
+
+---
+
+
+
+```r
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  geom_violin(alpha = 0.5) 
+```
+
+<img src="assets/fig/unnamed-chunk-22-1.png" title="plot of chunk unnamed-chunk-22" alt="plot of chunk unnamed-chunk-22" style="display: block; margin: auto;" />
+
+---
+
+
+## Line plots
+
+
 
