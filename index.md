@@ -132,7 +132,7 @@ knit        : slidify::knit2slides
 
 ---
 
-## ggplot2 works with dataframes
+## ggplot2 works with data frames
 
 
 ```r
@@ -596,8 +596,40 @@ knit        : slidify::knit2slides
 
 ---
 
-
 ## Line plots
+
+---
+
+
+```r
+  ggplot(economics, aes(x = date, y = pop)) +
+  geom_line() 
+```
+
+<img src="assets/fig/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(Orange, aes(x = age, y = circumference)) +
+  geom_line()
+```
+
+<img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree)) +
+  geom_line()
+```
+
+<img src="assets/fig/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" style="display: block; margin: auto;" />
+
+
+
 
 
 

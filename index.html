@@ -225,7 +225,7 @@
 
 <slide class="" id="slide-16" style="background:;">
   <hgroup>
-    <h2>ggplot2 works with dataframes</h2>
+    <h2>ggplot2 works with data frames</h2>
   </hgroup>
   <article data-timings="">
     <pre><code class="r">   library(ggplot2)
@@ -797,6 +797,42 @@
   <!-- Presenter Notes -->
 </slide>
 
+<slide class="" id="slide-59" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(economics, aes(x = date, y = pop)) +
+  geom_line() 
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-23-1.png" title="plot of chunk unnamed-chunk-23" alt="plot of chunk unnamed-chunk-23" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-60" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(Orange, aes(x = age, y = circumference)) +
+  geom_line()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-24-1.png" title="plot of chunk unnamed-chunk-24" alt="plot of chunk unnamed-chunk-24" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-61" style="background:;">
+  <article data-timings="">
+    <pre><code class="r">  ggplot(Orange, aes(x = age, y = circumference, group = Tree)) +
+  geom_line()
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
@@ -893,7 +929,7 @@
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='ggplot2 works with dataframes'>
+        data-slide=16 title='ggplot2 works with data frames'>
          16
       </a>
     </li>
@@ -1147,6 +1183,24 @@
       <a href="#" target="_self" rel='tooltip' 
         data-slide=58 title='Line plots'>
          58
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=59 title='NA'>
+         59
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=60 title='NA'>
+         60
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=61 title='NA'>
+         61
       </a>
     </li>
   </ul>

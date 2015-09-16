@@ -132,7 +132,7 @@ knit        : slidify::knit2slides
 
 ---
 
-## ggplot2 works with dataframes
+## ggplot2 works with data frames
 
 ```{r data, echo = TRUE, include = TRUE, warning = FALSE, message = FALSE} 
 
@@ -570,8 +570,37 @@ knit        : slidify::knit2slides
 
 ---
 
-
 ## Line plots
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(economics, aes(x = date, y = pop)) +
+  geom_line() 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference)) +
+  geom_line()
+ 
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree)) +
+  geom_line()
+ 
+```
+
+
+
 
 
 
