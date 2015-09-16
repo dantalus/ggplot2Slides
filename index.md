@@ -499,7 +499,8 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(mpg, aes(x = drv, y = class)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
 ```
 
 <img src="assets/fig/unnamed-chunk-14-1.png" title="plot of chunk unnamed-chunk-14" alt="plot of chunk unnamed-chunk-14" style="display: block; margin: auto;" />
@@ -509,7 +510,8 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(mpg, aes(x = drv, y = class, color = year)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
 ```
 
 <img src="assets/fig/unnamed-chunk-15-1.png" title="plot of chunk unnamed-chunk-15" alt="plot of chunk unnamed-chunk-15" style="display: block; margin: auto;" />
@@ -519,7 +521,8 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
 ```
 
 <img src="assets/fig/unnamed-chunk-16-1.png" title="plot of chunk unnamed-chunk-16" alt="plot of chunk unnamed-chunk-16" style="display: block; margin: auto;" />
@@ -566,7 +569,8 @@ knit        : slidify::knit2slides
 
 ```r
   ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species)) +
-  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), outlier.shape = NA) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), 
+              outlier.shape = NA) +
   geom_boxplot(alpha = 0.5) 
 ```
 
@@ -576,7 +580,8 @@ knit        : slidify::knit2slides
 
 
 ```r
-  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, 
+                   fill = Species)) +
   geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
   geom_boxplot(alpha = 0.5, outlier.shape = NA) 
 ```
@@ -588,7 +593,8 @@ knit        : slidify::knit2slides
 
 
 ```r
-  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, 
+                   fill = Species)) +
   geom_violin(alpha = 0.5) 
 ```
 
@@ -628,8 +634,185 @@ knit        : slidify::knit2slides
 
 <img src="assets/fig/unnamed-chunk-25-1.png" title="plot of chunk unnamed-chunk-25" alt="plot of chunk unnamed-chunk-25" style="display: block; margin: auto;" />
 
+---
 
 
+```r
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, color = Tree)) +
+  geom_line()
+```
+
+<img src="assets/fig/unnamed-chunk-26-1.png" title="plot of chunk unnamed-chunk-26" alt="plot of chunk unnamed-chunk-26" style="display: block; margin: auto;" />
+
+---
 
 
+```r
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_line()
+```
+
+<img src="assets/fig/unnamed-chunk-27-1.png" title="plot of chunk unnamed-chunk-27" alt="plot of chunk unnamed-chunk-27" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+<img src="assets/fig/unnamed-chunk-28-1.png" title="plot of chunk unnamed-chunk-28" alt="plot of chunk unnamed-chunk-28" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+```
+
+<img src="assets/fig/unnamed-chunk-29-1.png" title="plot of chunk unnamed-chunk-29" alt="plot of chunk unnamed-chunk-29" style="display: block; margin: auto;" />
+
+---
+
+## Bar plots
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl))) +
+  geom_bar()
+```
+
+<img src="assets/fig/unnamed-chunk-30-1.png" title="plot of chunk unnamed-chunk-30" alt="plot of chunk unnamed-chunk-30" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl))) +
+  geom_bar() +
+  coord_flip()
+```
+
+<img src="assets/fig/unnamed-chunk-31-1.png" title="plot of chunk unnamed-chunk-31" alt="plot of chunk unnamed-chunk-31" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(total = n()) %>%
+  mutate(cyl = factor(cyl)) %>%
+  mutate(cyl = reorder(cyl, total, max)) 
+```
+
+```
+## Source: local data frame [4 x 2]
+## 
+##   cyl total
+## 1   4    81
+## 2   5     4
+## 3   6    79
+## 4   8    70
+```
+
+---
+
+
+```r
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(total = n()) %>%
+  mutate(cyl = factor(cyl)) %>%
+  mutate(cyl = reorder(cyl, total, max)) %>%
+  
+  ggplot(aes(x = cyl, y = total)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
+
+<img src="assets/fig/unnamed-chunk-33-1.png" title="plot of chunk unnamed-chunk-33" alt="plot of chunk unnamed-chunk-33" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = interaction(factor(cyl), class))) +
+  geom_bar() +
+  coord_flip()
+```
+
+<img src="assets/fig/unnamed-chunk-34-1.png" title="plot of chunk unnamed-chunk-34" alt="plot of chunk unnamed-chunk-34" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar()
+```
+
+<img src="assets/fig/unnamed-chunk-35-1.png" title="plot of chunk unnamed-chunk-35" alt="plot of chunk unnamed-chunk-35" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar(position = "dodge")
+```
+
+<img src="assets/fig/unnamed-chunk-36-1.png" title="plot of chunk unnamed-chunk-36" alt="plot of chunk unnamed-chunk-36" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  ggplot(mpg, aes(x = factor(cyl), y = cty)) +
+  geom_bar(stat = "identity")
+```
+
+<img src="assets/fig/unnamed-chunk-37-1.png" title="plot of chunk unnamed-chunk-37" alt="plot of chunk unnamed-chunk-37" style="display: block; margin: auto;" />
+
+---
+
+
+```r
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(meancty = mean(cty)) 
+```
+
+```
+## Source: local data frame [4 x 2]
+## 
+##   cyl  meancty
+## 1   4 21.01235
+## 2   5 20.50000
+## 3   6 16.21519
+## 4   8 12.57143
+```
+
+---
+
+
+```r
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(meancty = mean(cty)) %>%
+   
+  ggplot(aes(x = factor(cyl), y = meancty)) +
+  geom_bar(stat = "identity")
+```
+
+<img src="assets/fig/unnamed-chunk-39-1.png" title="plot of chunk unnamed-chunk-39" alt="plot of chunk unnamed-chunk-39" style="display: block; margin: auto;" />
 

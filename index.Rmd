@@ -476,7 +476,8 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = drv, y = class)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
   
 ```
 
@@ -485,7 +486,8 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = drv, y = class, color = year)) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
  
   
 ```
@@ -495,7 +497,8 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(mpg, aes(x = drv, y = class, color = factor(year))) +
-  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, height = 0.2)) 
+  geom_jitter(alpha = 0.5, position = position_jitter(width = 0.2, 
+                                                      height = 0.2)) 
  
   
 ```
@@ -543,7 +546,8 @@ knit        : slidify::knit2slides
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
   ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species)) +
-  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), outlier.shape = NA) +
+  geom_jitter(position = position_jitter(width = 0.2, height = 0.1), 
+              outlier.shape = NA) +
   geom_boxplot(alpha = 0.5) 
   
 ```
@@ -552,7 +556,8 @@ knit        : slidify::knit2slides
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
-  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, 
+                   fill = Species)) +
   geom_jitter(position = position_jitter(width = 0.2, height = 0.1)) +
   geom_boxplot(alpha = 0.5, outlier.shape = NA) 
   
@@ -563,7 +568,8 @@ knit        : slidify::knit2slides
 
 ```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
 
-  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, fill = Species)) +
+  ggplot(iris, aes(x = Species, y = Sepal.Length, color = Species, 
+                   fill = Species)) +
   geom_violin(alpha = 0.5) 
   
 ```
@@ -599,8 +605,155 @@ knit        : slidify::knit2slides
  
 ```
 
+---
 
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, color = Tree)) +
+  geom_line()
+ 
+```
 
+---
 
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_line()
+ 
+```
 
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+ 
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+  
+  ggplot(Orange, aes(x = age, y = circumference, group = Tree, 
+                     linetype = Tree, color = Tree)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+ 
+```
+
+---
+
+## Bar plots
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl))) +
+  geom_bar()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl))) +
+  geom_bar() +
+  coord_flip()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(total = n()) %>%
+  mutate(cyl = factor(cyl)) %>%
+  mutate(cyl = reorder(cyl, total, max)) 
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 5, fig.height = 4, fig.align = 'center'} 
+
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(total = n()) %>%
+  mutate(cyl = factor(cyl)) %>%
+  mutate(cyl = reorder(cyl, total, max)) %>%
+  
+  ggplot(aes(x = cyl, y = total)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = interaction(factor(cyl), class))) +
+  geom_bar() +
+  coord_flip()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar()
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), fill = class)) +
+  geom_bar(position = "dodge")
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  ggplot(mpg, aes(x = factor(cyl), y = cty)) +
+  geom_bar(stat = "identity")
+  
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE} 
+
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(meancty = mean(cty)) 
+   
+```
+
+---
+
+```{r, echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 6, fig.align = 'center'} 
+
+  mpg %>%
+  group_by(cyl) %>%
+  summarize(meancty = mean(cty)) %>%
+   
+  ggplot(aes(x = factor(cyl), y = meancty)) +
+  geom_bar(stat = "identity")
+  
+```
 
